@@ -1,0 +1,13 @@
+package templates
+
+import (
+	"gohtmxtodolist/data"
+)
+
+templ TasksContainer(tasks data.TasksDb) {
+	<div class="flex flex-col max-h-96 overflow-auto space-y-4" id="tasks-container">
+		for _, id := range tasks.IdList {
+			@Task(id, *tasks.TasksMap[id])
+		}
+	</div>
+}

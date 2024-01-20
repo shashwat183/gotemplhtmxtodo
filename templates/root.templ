@@ -1,0 +1,68 @@
+package templates
+
+import (
+	"gohtmxtodolist/data"
+)
+
+templ Root(tasks data.TasksDb) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8"/>
+			<script src="https://cdn.tailwindcss.com"></script>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+		</head>
+		<body class="flex items-center justify-center h-screen">
+			<div class="w-full max-w-2xl mx-auto p-6 space-y-6">
+				<h1 class="font-bold text-2xl text-center">
+					Classic To-Do List
+				</h1>
+				@TasksContainer(tasks)
+				<form class="flex flex-col space-y-4">
+					<input
+						class="flex h-10 w-full bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm 
+                                          file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
+                                          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 
+                                          flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-900"
+						id="newTask"
+						name="task"
+						placeholder="Add new task"
+					/>
+					<input
+						class="flex h-10 w-full bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm 
+                                          file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
+                                          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 
+                                          flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-900"
+						id="newTaskDescription"
+						name="description"
+						placeholder="Add task description"
+					/>
+					<div class="flex justify-between">
+						<button
+							class="inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-colors 
+                                           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 
+                                           disabled:pointer-events-none disabled:opacity-50 h-10 bg-green-500 hover:bg-green-600 text-white font-bold 
+                                           py-2 px-4 rounded"
+							hx-post="/tasks"
+							hx-target="#tasks-container"
+							hx-swap="beforeend scroll:bottom"
+						>
+							Add
+						</button>
+						<button
+							class="inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-colors 
+                                           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 
+                                           disabled:pointer-events-none disabled:opacity-50 h-10 bg-red-500 hover:bg-red-600 text-white font-bold 
+                                           py-2 px-4 rounded"
+							hx-post="/tasks/clear"
+							hx-target="#tasks-container"
+							hx-swap="outerHTML"
+						>
+							Clear Done Tasks
+						</button>
+					</div>
+				</form>
+			</div>
+		</body>
+	</html>
+}
